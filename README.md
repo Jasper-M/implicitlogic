@@ -9,7 +9,7 @@ This project is not yet published anywhere. Run the following commands to instal
 ```
 git clone https://github.com/Jasper-M/implicitlogic.git
 cd implicitlogic
-sbt "+ publish"
+sbt "+ publishLocal"
 ```
 
 Then add the following to your own build.sbt:

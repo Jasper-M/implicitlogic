@@ -66,3 +66,5 @@ res23: List[Option[Int]] = List(Some(5), None)
 scala> def noIntegralFractions[A](a: A)(implicit ev: Not[Integral[A] And Fractional[A]]): A = a
 noIntegralFractions: [A](a: A)(implicit ev: implicitlogic.Not[implicitlogic.And[Integral[A],Fractional[A]]])A
 ```
+
+There are also some helpful type aliases in [the `typehelpers` object](https://github.com/Jasper-M/implicitlogic/blob/master/src/main/scala/implicitlogic/typehelpers.scala).

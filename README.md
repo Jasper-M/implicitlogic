@@ -67,4 +67,33 @@ scala> def noIntegralFractions[A](a: A)(implicit ev: Not[Integral[A] And Fractio
 noIntegralFractions: [A](a: A)(implicit ev: implicitlogic.Not[implicitlogic.And[Integral[A],Fractional[A]]])A
 ```
 
+The underlying values of `And` and `Or` can be accessed through their `result` attribute. `Not` obviously has no result. You can also use the aliases `&&`, `||` and `!`.
+
+```scala
+scala> val (numeric, ordering) = implicitly[Numeric[Int] && Ordering[Int]].result
+numeric: Numeric[Int] = scala.math.Numeric$IntIsIntegral$@21d0366
+ordering: Ordering[Int] = scala.math.Ordering$Int$@11507b97
+
+scala> val Left(numeric) = implicitly[Numeric[Int] || Ordering[Int]].result
+numeric: Numeric[Int] = scala.math.Numeric$IntIsIntegral$@21d0366
+```
+
+`Xor` is defined in function of `And`, `Or` and `Not`.
+
+```scala
+scala> implicitly[Numeric[Int] Xor Ordering[Int]]
+<console>:15: error: could not find implicit value for parameter e: implicitlogic.Xor[Numeric[Int],Ordering[Int]]
+       implicitly[Numeric[Int] Xor Ordering[Int]]
+                 ^
+
+scala> trait Foo[T]
+defined trait Foo
+
+scala> implicitly[Numeric[Int] Xor Foo[Int]]
+res2: implicitlogic.Xor[Numeric[Int],Foo[Int]] = Xor(Left(scala.math.Numeric$IntIsIntegral$@60a53041))
+
+scala> implicitly[Foo[Int] Xor Ordering[Int]]
+res3: implicitlogic.Xor[Foo[Int],Ordering[Int]] = Xor(Right(scala.math.Ordering$Int$@69c31872))
+```
+
 There are also some helpful type aliases in [the `typehelpers` object](https://github.com/Jasper-M/implicitlogic/blob/master/src/main/scala/implicitlogic/typehelpers.scala).

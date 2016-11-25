@@ -19,12 +19,24 @@ package implicitlogic
 /*
  * Equivalent but without "result" value: type Or[A,B] = Not[Not[A] And Not[B]]
  */
-final case class Or[A, B](result: Either[A,B])
+sealed trait Or[A,B] {
+  def result: Either[A,B]
+}
 
 protected trait LowerPriorityOr {
   implicit def makeOrRight[A,B](implicit b: B): Or[A,B] = Or(Right(b))
 }
 
 object Or extends LowerPriorityOr {
-  implicit def makeOrLeft[A,B](implicit a: A): Or[A,B] = Or(Left(a))
+  private[implicitlogic] def apply[A,B](ab: Either[A,B]) = new Or[A,B] {
+    val result = ab
+    override def toString = s"Or($result)"
+    override def equals(that: Any) = that match {
+      case or: Or[_,_] => result.equals(or.result)
+      case _ => false
+    }
+    override def hashCode = 13 * result.hashCode + 17
+  }
+
+  implicit def makeOrLeft[A,B](implicit a: A): Or[A, B] = Or(Left(a))
 }

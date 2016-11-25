@@ -16,8 +16,20 @@
 
 package implicitlogic
 
-final case class And[A, B](result: (A, B))
+sealed trait And[A,B] {
+  def result: (A,B)
+}
 
 object And {
+  private def apply[A,B](ab: (A,B)) = new And[A,B] {
+    val result = ab
+    override def toString = s"And($result)"
+    override def equals(that: Any) = that match {
+      case and: And[_,_] => result.equals(and.result)
+      case _ => false
+    }
+    override def hashCode = 13 * result.hashCode + 7
+  }
+  
   implicit def makeAnd[A,B](implicit a: A, b: B): And[A,B] = And((a,b))
 }

@@ -28,7 +28,7 @@ object And {
       case and: And[_,_] => result.equals(and.result)
       case _ => false
     }
-    override def hashCode = 13 * result.hashCode + 7
+    override def hashCode = 13 * 7 + result.hashCode
   }
   
   implicit def makeAnd[A,B](implicit a: A, b: B): And[A,B] = And((a,b))

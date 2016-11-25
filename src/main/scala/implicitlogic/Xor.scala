@@ -28,7 +28,7 @@ object Xor {
       case xor: Xor[_,_] => result.equals(xor.result)
       case _ => false
     }
-    override def hashCode = 13 * result.hashCode + 7
+    override def hashCode = 13 * 7 + result.hashCode
   }
 
   implicit def makeXor[A,B](implicit ev : (A || B) && ![A && B]): Xor[A,B] = {

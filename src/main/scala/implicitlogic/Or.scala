@@ -35,7 +35,7 @@ object Or extends LowerPriorityOr {
       case or: Or[_,_] => result.equals(or.result)
       case _ => false
     }
-    override def hashCode = 13 * result.hashCode + 17
+    override def hashCode = 13 * 17 + result.hashCode
   }
 
   implicit def makeOrLeft[A,B](implicit a: A): Or[A, B] = Or(Left(a))

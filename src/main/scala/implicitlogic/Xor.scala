@@ -18,17 +18,18 @@ package implicitlogic
 
 sealed trait Xor[A,B] {
   def result: Either[A,B]
+  
+  override def toString = s"Xor($result)"
+  override def equals(that: Any) = that match {
+    case xor: Xor[_,_] => result.equals(xor.result)
+    case _ => false
+  }
+  override def hashCode = 13 * 7 + result.hashCode
 }
 
 object Xor {
   private def apply[A,B](ab: Either[A,B]) = new Xor[A,B] {
     val result = ab
-    override def toString = s"Xor($result)"
-    override def equals(that: Any) = that match {
-      case xor: Xor[_,_] => result.equals(xor.result)
-      case _ => false
-    }
-    override def hashCode = 13 * 7 + result.hashCode
   }
 
   implicit def makeXor[A,B](implicit ev : (A || B) && ![A && B]): Xor[A,B] = {

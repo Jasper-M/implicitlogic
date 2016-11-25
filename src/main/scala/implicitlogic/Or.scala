@@ -21,6 +21,13 @@ package implicitlogic
  */
 sealed trait Or[A,B] {
   def result: Either[A,B]
+  
+  override def toString = s"Or($result)"
+  override def equals(that: Any) = that match {
+    case or: Or[_,_] => result.equals(or.result)
+    case _ => false
+  }
+  override def hashCode = 13 * 17 + result.hashCode
 }
 
 protected trait LowerPriorityOr {
@@ -30,12 +37,6 @@ protected trait LowerPriorityOr {
 object Or extends LowerPriorityOr {
   private[implicitlogic] def apply[A,B](ab: Either[A,B]) = new Or[A,B] {
     val result = ab
-    override def toString = s"Or($result)"
-    override def equals(that: Any) = that match {
-      case or: Or[_,_] => result.equals(or.result)
-      case _ => false
-    }
-    override def hashCode = 13 * 17 + result.hashCode
   }
 
   implicit def makeOrLeft[A,B](implicit a: A): Or[A, B] = Or(Left(a))

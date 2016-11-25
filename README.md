@@ -78,7 +78,7 @@ scala> val Left(numeric) = implicitly[Numeric[Int] || Ordering[Int]].result
 numeric: Numeric[Int] = scala.math.Numeric$IntIsIntegral$@21d0366
 ```
 
-`Xor` is [defined](https://github.com/Jasper-M/implicitlogic/blob/master/src/main/scala/implicitlogic/Xor.scala#L34) in function of `And`, `Or` and `Not`.
+`Xor` is [defined](https://github.com/Jasper-M/implicitlogic/blob/master/src/main/scala/implicitlogic/Xor.scala#L35) in function of `And`, `Or` and `Not`.
 
 ```scala
 scala> implicitly[Numeric[Int] Xor Ordering[Int]]

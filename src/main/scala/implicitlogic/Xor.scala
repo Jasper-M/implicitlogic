@@ -20,7 +20,7 @@ final case class Xor[A, B](result: Either[A,B])
 
 object Xor {
   implicit def makeXor[A,B](implicit ev : (A || B) && ![A && B]): Xor[A,B] = {
-    val (either, _) = ev.result
-    Xor(either.result)
+    val (or, _) = ev.result
+    Xor(or.result)
   }
 }

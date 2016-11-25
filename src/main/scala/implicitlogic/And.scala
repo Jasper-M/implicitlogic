@@ -16,7 +16,7 @@
 
 package implicitlogic
 
-case class And[A, B](result: (A, B))
+final case class And[A, B](result: (A, B))
 
 object And {
   implicit def makeAnd[A,B](implicit a: A, b: B): And[A,B] = And((a,b))

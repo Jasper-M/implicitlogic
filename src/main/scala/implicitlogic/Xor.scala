@@ -16,15 +16,11 @@
 
 package implicitlogic
 
-/*
- * Equivalent but without "result" value: type Or[A,B] = Not[Not[A] And Not[B]]
- */
-final case class Or[A, B](result: Either[A,B])
+final case class Xor[A, B](result: Either[A,B])
 
-protected trait LowerPriorityOr {
-  implicit def makeOrRight[A,B](implicit b: B): Or[A,B] = Or(Right(b))
-}
-
-object Or extends LowerPriorityOr {
-  implicit def makeOrLeft[A,B](implicit a: A): Or[A,B] = Or(Left(a))
+object Xor {
+  implicit def makeXor[A,B](implicit ev : (A || B) && ![A && B]): Xor[A,B] = {
+    val (either, _) = ev.result
+    Xor(either.result)
+  }
 }

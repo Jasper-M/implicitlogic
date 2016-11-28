@@ -30,14 +30,17 @@ sealed trait Or[A,B] {
   override def hashCode = 13 * 17 + result.hashCode
 }
 
-protected trait LowerPriorityOr {
-  implicit def makeOrRight[A,B](implicit b: B): Or[A,B] = Or(Right(b))
+protected sealed trait LowerPriorityOr { this: OrFactory =>
+  implicit def makeOrRight[A,B](implicit b: B): Or[A,B] = createOr(Right(b))
 }
 
-object Or extends LowerPriorityOr {
-  private[implicitlogic] def apply[A,B](ab: Either[A,B]) = new Or[A,B] {
+protected sealed trait OrFactory {
+  protected[this] def createOr[A,B](ab: Either[A,B]) = new Or[A,B] {
     val result = ab
   }
+}
 
-  implicit def makeOrLeft[A,B](implicit a: A): Or[A, B] = Or(Left(a))
+object Or extends LowerPriorityOr with OrFactory {
+
+  implicit def makeOrLeft[A,B](implicit a: A): Or[A, B] = createOr(Left(a))
 }

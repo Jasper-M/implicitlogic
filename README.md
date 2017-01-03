@@ -4,7 +4,7 @@ This is a simple toy project for playing around with some implicit resolution tr
 
 ### Getting started
 
-This project is not yet published anywhere. Run the following commands to install it locally:
+This project is not yet published anywhere. If that is important to you, please open an issue about it. Run the following commands to install it locally:
 
 ```
 git clone https://github.com/Jasper-M/implicitlogic.git

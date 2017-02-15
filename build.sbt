@@ -4,9 +4,9 @@ organization := "com.jasperm"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.12.0"
+scalaVersion := "2.12.1"
 
-crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.0")
+crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.1")
 
 import de.heikoseeberger.sbtheader.license.Apache2_0
 
